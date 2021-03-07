@@ -1,17 +1,47 @@
 class Player{
     constructor(X){
         this.X = X;
-        this.Y = 40;
-        this.drawInstance();
+        this.Y = width * 4 / 6;
+        this.BulletExists = false;
+        this.Bullet = [];
     }
-    shiftPosition(offset) {
-        new Player(this.X + offset);
+    update() {
+        this.X = mouseX;
+        currentPlayer.drawInstance();
+        if (currentPlayer.BulletExists) {
+            for (const i of this.Bullet) {
+                i.update();
+            }
+        }
+        if (this.Bullet.length == 0) {
+            this.BulletExists = false;
+        }
     }
     drawInstance() {
         fill("white");
-        triangle(this.X - 10, this.Y, this.X + 10, this.Y, this.X, this.Y + 10)
+        triangle(this.X - 10, this.Y, this.X + 10, this.Y, this.X, this.Y - 10)
+    }
+    shoot() {
+        console.log("boom")
+        this.Bullet.push(new Bullet());
+        this.BulletExists = true;
     }
 }
-
-
-currentPlayer = new Player(200);
+ 
+class Bullet{
+    constructor() {
+        this.X = currentPlayer.X;
+        this.Y = currentPlayer.Y;
+        this.update();
+    }
+    update() {
+        this.Y -= width / 60;
+        if (this.Y <= 0) {
+            this.Y = currentPlayer.Y;
+            currentPlayer.Bullet.splice(0,1);
+            return;
+        }
+        fill("red");
+        ellipse(this.X, this.Y, width / 40, height / 20);
+    }
+}
