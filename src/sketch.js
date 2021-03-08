@@ -10,6 +10,10 @@ function setup() {
  }
   
 function draw() {
-    background(0);
-    currentPlayer.update();
+    currentPlayer.drawInstance();
+    if (currentPlayer.BulletExists){
+        for (const i of currentPlayer.Bullet) {
+            i.update();
+        }
+    }
 }

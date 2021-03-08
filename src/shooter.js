@@ -5,17 +5,18 @@ class Player{
         this.BulletExists = false;
         this.Bullet = [];
     }
-    update() {
-        this.X = mouseX;
+    move(front) {
+        background(0);
+        if (front) this.Y -= 3;
+        else this.Y += 3;
         currentPlayer.drawInstance();
-        if (currentPlayer.BulletExists) {
-            for (const i of this.Bullet) {
-                i.update();
-            }
-        }
+
         if (this.Bullet.length == 0) {
             this.BulletExists = false;
         }
+    }
+    rotate(left) {
+        
     }
     drawInstance() {
         fill("white");
@@ -37,11 +38,17 @@ class Bullet{
     update() {
         this.Y -= width / 60;
         if (this.Y <= 0) {
+            erase();
+            ellipse(this.X, this.Y + width / 60, width / 40, height / 20);
+            noErase();
             this.Y = currentPlayer.Y;
-            currentPlayer.Bullet.splice(0,1);
+            currentPlayer.Bullet.splice(0, 1);
             return;
         }
         fill("red");
+        erase();
+        ellipse(this.X, this.Y + width / 60, width / 40, height / 20);
+        noErase();
         ellipse(this.X, this.Y, width / 40, height / 20);
     }
 }
