@@ -1,7 +1,7 @@
 class Player{
     constructor(X){
         this.X = X;
-        this.Y = width * 4 / 6;
+        this.Y = height * 4 / 6;
         this.BulletExists = false;
         this.Bullet = [];
     }
