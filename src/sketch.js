@@ -6,7 +6,7 @@ function setup() {
     currentPlayer = new Player(width / 2);
     background(0);
     currentPlayer.drawInstance();
-
+    angleMode(DEGREES);
  }
   
 function draw() {
@@ -15,5 +15,8 @@ function draw() {
         for (const i of currentPlayer.Bullet) {
             i.update();
         }
+    }
+    if (currentPlayer.Bullet.length == 0) {
+        currentPlayer.BulletExists = false;
     }
 }
