@@ -8,30 +8,18 @@ class Player{
     }
     move() {
         background(0);
-        if(this.rotateDeg == 0){
-            this.Ymovement = 3; 
-            this.Xmovement = 0;
-        }else if(this.rotateDeg < 90){
-            this.Xmovement = this.rotateDeg%90 * 3;
-            this.Ymovement = -(this.rotateDeg%90) * 3;
-        }else if(this.rotateDeg < 180){
-            this.Xmovement = this.rotateDeg%90 * 3;
-            this.Ymovement = this.rotateDeg%90 * 3;
-        }else if(this. rotateDeg < 270){
-            this.Xmovement = -(this.rotateDeg%90) * 3;
-            this.Ymovement = this.rotateDeg%90 * 3;
-        }else{
-            this.Xmovement = -(this.rotateDeg%90) * 3;
-            this.Ymovement = -(this.rotateDeg%90) * 3;
+        if(this.rotateDeg < 90){
+            this.Ymovement = Math.cos(this.rotateDeg) * 10;
+            this.Xmovement = Math.sin(this.rotateDeg) * 10;
         }
-        this.Y -= this.Ymovement;
-        this.X -= this.Xmovement;
-        console.log(this.X, this.Y)
+        this.Y += this.Ymovement;
+        this.X += this.Xmovement;
+        console.log(this.Xmovement, this.Ymovement, this.rotateDeg)
         currentPlayer.drawInstance();
     }
     rotate(left) {
-        if (left) this.rotateDeg -= 10;
-        else this.rotateDeg += 10;
+        if (left) this.rotateDeg -= 1;
+        else this.rotateDeg += 1;
         this.rotateDeg = abs(this.rotateDeg) % 360;
         console.log(this.rotateDeg)
     }
