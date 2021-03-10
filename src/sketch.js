@@ -1,4 +1,4 @@
-let currentPlayer;
+let currentPlayer, delay = 0;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -10,11 +10,12 @@ function setup() {
  }
   
 function draw() {
+    delay++;
     currentPlayer.drawInstance();
     if (currentPlayer.BulletExists){
-        for (const i of currentPlayer.Bullet) {
-            i.update();
-        }
+        for (const [key, value] of Object.entries(currentPlayer.Bullet)) {
+            value.update();
+         }
     }
     if (currentPlayer.Bullet.length == 0) {
         currentPlayer.BulletExists = false;

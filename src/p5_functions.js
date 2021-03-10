@@ -1,3 +1,6 @@
 function mouseReleased() {
-    currentPlayer.shoot();
+    if(delay > 60){
+        currentPlayer.shoot();
+        delay = 0;
+    }
 }
