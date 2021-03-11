@@ -1,33 +1,40 @@
 class Player{
-    constructor(X){
-        this.X = X;
-        this.Y = height * 4 / 6;
+    constructor(X) {
+        this.pos = createVector(X, height / 2);
+        this.velocity = createVector(0, 0);
         this.BulletExists = false;
         this.Bullet = {};
         this.rotateDeg = 0;
     }
+    addForce(back = false) {
+        let pushX = Math.sin(this.rotateDeg * Math.PI / 180);
+        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1;
+        let force = createVector(pushX, pushY);
+        if (back) force.mult(-1);
+        let testX = force.x + this.velocity.x;
+        let testY = force.y + this.velocity.y;
+        if (testX < maxSpeed && testX >= -maxSpeed) this.velocity.x += force.x;
+        if (testY < maxSpeed && testY >= -maxSpeed) this.velocity.y += force.y;
+    }
     move() {
         background(0);
-        this.Ymovement = Math.cos(this.rotateDeg * Math.PI / 180) * -10;
-        this.Xmovement = Math.sin(this.rotateDeg * Math.PI / 180) * 10;
-        this.Y += this.Ymovement;
-        this.X += this.Xmovement;
+        let testX = this.pos.x + this.velocity.x, testY = this.pos.y + this.velocity.y;
+        if (testX < width && testX > 0 && testY > 0 && testY < height)this.pos.add(this.velocity);
         currentPlayer.drawInstance();
     }
     rotate(left) {
-        if (left) this.rotateDeg -= 5;
-        else this.rotateDeg += 5;
+        //restricting rotation angle
+        if (left) this.rotateDeg -= rotateInterval;
+        else this.rotateDeg += rotateInterval;
         if (this.rotateDeg < 0) this.rotateDeg += 360;
         this.rotateDeg = this.rotateDeg % 360;
-        console.log(this.rotateDeg)
     }
     drawInstance() {
         push();
-        translate(this.X, this.Y);
+        translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
         fill("white");
         triangle(- 10, 0, 10, 0, 0, - 10)
-
         pop();
     }
     shoot() {

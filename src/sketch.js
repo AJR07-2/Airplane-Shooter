@@ -1,4 +1,4 @@
-let currentPlayer, delay = 0;
+let currentPlayer, delay = 0, maxSpeed = 1, rotateInterval = 7;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -11,11 +11,9 @@ function setup() {
   
 function draw() {
     delay++;
-    currentPlayer.drawInstance();
-    if (currentPlayer.BulletExists){
-        for (const [key, value] of Object.entries(currentPlayer.Bullet)) {
-            value.update();
-         }
+    currentPlayer.move();
+    for (const [key, value] of Object.entries(currentPlayer.Bullet)) {
+        value.update();
     }
     if (currentPlayer.Bullet.length == 0) {
         currentPlayer.BulletExists = false;
