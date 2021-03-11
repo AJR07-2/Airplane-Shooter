@@ -7,8 +7,8 @@ class Player{
         this.rotateDeg = 0;
     }
     addForce(back = false) {
-        let pushX = Math.sin(this.rotateDeg * Math.PI / 180);
-        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1;
+        let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 10;
+        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1 / 10;
         let force = createVector(pushX, pushY);
         if (back) force.mult(-1);
         let testX = force.x + this.velocity.x;
