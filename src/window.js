@@ -1,9 +1,13 @@
-var map = {};
+var keys = {};
 onkeydown = onkeyup = function(e){
     e = e || event; 
-    map[e.keyCode] = e.type == 'keydown';
-    if(map[87])currentPlayer.addForce(false); //W
-    if (map[65]) currentPlayer.rotate(true); //A
-    if(map[83])currentPlayer.addForce(true); //s
-    if(map[68])currentPlayer.rotate(false); //D
+    keys[e.keyCode] = e.type == 'keydown';
+    if (keys[87]) player[0].addForce(false); //W
+    if (keys[65]) player[0].rotate(true); //A
+    if (keys[83]) player[0].addForce(true); //s
+    if (keys[68]) player[0].rotate(false); //D
+    if (keys[73]) player[1].addForce(false); //I
+    if (keys[74]) player[1].rotate(true); //J
+    if (keys[75]) player[1].addForce(true); //K
+    if (keys[76]) player[1].rotate(false); //L
 }

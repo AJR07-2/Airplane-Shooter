@@ -1,21 +1,16 @@
-let currentPlayer, delay = 0, maxSpeed = 1, rotateInterval = 7;
-
+let player = [], delay = 0, maxSpeed = 2, rotateInterval = 7;
+let noPlayers = 2;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     //creation of player
-    currentPlayer = new Player(width / 2);
+    for (let i = 0; i < noPlayers; i++) player.push(new Player(width / 2, i));
     background(0);
-    currentPlayer.drawInstance();
     angleMode(DEGREES);
  }
   
 function draw() {
     delay++;
-    currentPlayer.move();
-    for (const [key, value] of Object.entries(currentPlayer.Bullet)) {
-        value.update();
-    }
-    if (currentPlayer.Bullet.length == 0) {
-        currentPlayer.BulletExists = false;
-    }
+    background(0);
+    for (let i = 0; i < noPlayers; i++) player[i].move();
 }
+

@@ -1,14 +1,14 @@
 class Player{
-    constructor(X) {
+    constructor(X, playerNo) {
         this.pos = createVector(X, height / 2);
         this.velocity = createVector(0, 0);
-        this.BulletExists = false;
-        this.Bullet = {};
         this.rotateDeg = 0;
+        this.Bullet = null;
+        this.playerNo = playerNo;
     }
     addForce(back = false) {
-        let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 10;
-        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1 / 10;
+        let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 5;
+        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1 / 5;
         let force = createVector(pushX, pushY);
         if (back) force.mult(-1);
         let testX = force.x + this.velocity.x;
@@ -17,10 +17,10 @@ class Player{
         if (testY < maxSpeed && testY >= -maxSpeed) this.velocity.y += force.y;
     }
     move() {
-        background(0);
         let testX = this.pos.x + this.velocity.x, testY = this.pos.y + this.velocity.y;
         if (testX < width && testX > 0 && testY > 0 && testY < height)this.pos.add(this.velocity);
-        currentPlayer.drawInstance();
+        this.drawInstance();
+        this.Bullet?.update();
     }
     rotate(left) {
         //restricting rotation angle
@@ -34,25 +34,19 @@ class Player{
         translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
         fill("white");
-        triangle(- 10, 0, 10, 0, 0, - 10)
+        triangle(- 10, 0, 10, 0, 0, - 10);
         pop();
     }
     shoot() {
-        this.BulletUID = this.uid;
-        this.Bullet[this.BulletUID] = (new Bullet(this.pos.x, this.pos.y, this.BulletUID));
-        this.BulletExists = true;
-    }
-    uid() {
-        return Math.random().toString(36).substr(2, 9);
+        this.Bullet = new Bullet(this.pos.x, this.pos.y, this.playerNo);
     }
 }
  
 class Bullet{
-    constructor(X, Y, uid) {
+    constructor(X, Y, playerNo) {
         this.pos = createVector(X + 0.01, Y + 0.01);
-        this.rotateDeg = currentPlayer.rotateDeg;
-        this.update();
-        this.uid = uid;
+        this.relatedPlayerNo = playerNo;
+        this.rotateDeg = player[this.relatedPlayerNo].rotateDeg;
     }
     update() {
         this.prevPos = createVector(this.pos.x, this.pos.y);
@@ -62,9 +56,10 @@ class Bullet{
         this.checkDeletion();
         this.pos.add(this.force);
         this.drawInstance();
+        this.checkCollision();
     }
-    checkDeletion() {
-        if (this.pos.y <= 0 || this.pos.y >= height || this.pos.x <= 0 || this.pos.x >= width) {
+    checkDeletion(confirm = false) {
+        if (this.pos.y <= 0 || this.pos.y >= height || this.pos.x <= 0 || this.pos.x >= width || confirm) {
             push();
             translate(this.prevPos.x, this.prevPos.y);
             rotate(this.rotateDeg);
@@ -72,8 +67,16 @@ class Bullet{
             ellipse(0, 0, width / 40, height / 20);
             noErase();
             pop();
-            delete currentPlayer.Bullet[this.uid];
+            player[this.relatedPlayerNo].Bullet = null;
             return;
+        }
+    }
+    checkCollision() {
+        for (let i = 0; i < noPlayers; i++){
+            if (i != this.relatedPlayerNo) {
+                let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
+                if (prox < 5) this.checkDeletion(true);
+            }
         }
     }
     drawInstance() {
