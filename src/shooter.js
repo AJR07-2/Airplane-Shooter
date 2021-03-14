@@ -1,12 +1,13 @@
 class Player{
     constructor(X, playerNo) {
-        this.pos = createVector(X +  random(1, 100), height / 2 + random(1, 100));
+        this.pos = createVector(X +  random(-100, 100), height / 2 + random(-100, 100));
         this.velocity = createVector(0, 0);
         this.rotateDeg = 0;
         this.Bullet = null;
         this.playerNo = playerNo;
         this.colour = color(random(100, 255), random(100, 255), random(100, 255))
         this.points = 0;
+        this.maxSpeed = 2;
     }
     addForce(back = false) {
         let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 5;
@@ -15,8 +16,8 @@ class Player{
         if (back) force.mult(-1);
         let testX = force.x + this.velocity.x;
         let testY = force.y + this.velocity.y;
-        if (testX < maxSpeed && testX >= -maxSpeed) this.velocity.x += force.x;
-        if (testY < maxSpeed && testY >= -maxSpeed) this.velocity.y += force.y;
+        if (testX < this.maxSpeed && testX >= -this.maxSpeed) this.velocity.x += force.x;
+        if (testY < this.maxSpeed && testY >= -this.maxSpeed) this.velocity.y += force.y;
     }
     move() {
         let testX = this.pos.x + this.velocity.x, testY = this.pos.y + this.velocity.y;
@@ -79,7 +80,7 @@ class Bullet{
         for (let i = 0; i < noPlayers; i++){
             if (i != this.relatedPlayerNo) {
                 let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
-                if (prox < 10) {
+                if (prox < 20) {
                     hitDelay = 0;
                     playerHit = this.relatedPlayerNo + 1;
                     this.checkDeletion(true);
