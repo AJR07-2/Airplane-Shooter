@@ -1,10 +1,12 @@
 class Player{
     constructor(X, playerNo) {
-        this.pos = createVector(X, height / 2);
+        this.pos = createVector(X +  random(1, 100), height / 2 + random(1, 100));
         this.velocity = createVector(0, 0);
         this.rotateDeg = 0;
         this.Bullet = null;
         this.playerNo = playerNo;
+        this.colour = color(random(100, 255), random(100, 255), random(100, 255))
+        this.points = 0;
     }
     addForce(back = false) {
         let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 5;
@@ -18,9 +20,11 @@ class Player{
     }
     move() {
         let testX = this.pos.x + this.velocity.x, testY = this.pos.y + this.velocity.y;
-        if (testX < width && testX > 0 && testY > 0 && testY < height)this.pos.add(this.velocity);
+        if (testX < width && testX > 0 && testY > 0 && testY < height) this.pos.add(this.velocity);
+        else this.velocity = createVector(0, 0)
         this.drawInstance();
         this.Bullet?.update();
+        this.velocity.mult(0.99);
     }
     rotate(left) {
         //restricting rotation angle
@@ -33,7 +37,7 @@ class Player{
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
-        fill("white");
+        fill(this.colour);
         triangle(- 10, 0, 10, 0, 0, - 10);
         pop();
     }
@@ -75,7 +79,12 @@ class Bullet{
         for (let i = 0; i < noPlayers; i++){
             if (i != this.relatedPlayerNo) {
                 let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
-                if (prox < 5) this.checkDeletion(true);
+                if (prox < 10) {
+                    hitDelay = 0;
+                    playerHit = this.relatedPlayerNo + 1;
+                    this.checkDeletion(true);
+                    player[i].points++;
+                }
             }
         }
     }

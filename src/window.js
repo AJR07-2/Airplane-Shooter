@@ -10,4 +10,8 @@ onkeydown = onkeyup = function(e){
     if (keys[74]) player[1].rotate(true); //J
     if (keys[75]) player[1].addForce(true); //K
     if (keys[76]) player[1].rotate(false); //L
+    if (keys[79] && delay1 > 60) { //O 
+        player[1].shoot();
+        delay1 = 0;
+    }
 }
