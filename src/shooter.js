@@ -6,12 +6,13 @@ class Player{
         this.Bullet = null;
         this.playerNo = playerNo;
         this.colour = color(random(100, 255), random(100, 255), random(100, 255))
-        this.points = 0;
         this.maxSpeed = 2;
+        this.accelerationFactor = 0.2;
+        this.rotateInterval = 10;
     }
     addForce(back = false) {
-        let pushX = Math.sin(this.rotateDeg * Math.PI / 180) / 5;
-        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1 / 5;
+        let pushX = Math.sin(this.rotateDeg * Math.PI / 180) * this.accelerationFactor;
+        let pushY = Math.cos(this.rotateDeg * Math.PI / 180) * -1 * this.accelerationFactor;
         let force = createVector(pushX, pushY);
         if (back) force.mult(-1);
         let testX = force.x + this.velocity.x;
@@ -29,8 +30,8 @@ class Player{
     }
     rotate(left) {
         //restricting rotation angle
-        if (left) this.rotateDeg -= rotateInterval;
-        else this.rotateDeg += rotateInterval;
+        if (left) this.rotateDeg -= this.rotateInterval;
+        else this.rotateDeg += this.rotateInterval;
         if (this.rotateDeg < 0) this.rotateDeg += 360;
         this.rotateDeg = this.rotateDeg % 360;
     }
@@ -81,10 +82,8 @@ class Bullet{
             if (i != this.relatedPlayerNo) {
                 let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
                 if (prox < 20) {
-                    hitDelay = 0;
-                    playerHit = this.relatedPlayerNo + 1;
                     this.checkDeletion(true);
-                    player[i].points++;
+                    displayText = "Player " + (i+1) + " was hit! Player " + (i+2) + " won!"
                 }
             }
         }

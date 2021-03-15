@@ -20,5 +20,13 @@ class boost{
     applyEffect(playerNo) {
         player[playerNo].maxSpeed++;
         player[playerNo].velocity.mult(1.05);
+        player[playerNo].accelerationFactor *= 1.1;
+        this.self_destruct();
+    }
+
+    self_destruct() {
+        booster.splice(this.boosterId, this.boosterId);
+        for (let i = this.boosterId; i < noBooster-1; i++)booster[i].boosterId--;
+        noBooster--;
     }
 }
