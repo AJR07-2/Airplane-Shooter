@@ -3,7 +3,7 @@ class Player{
         this.pos = createVector(X +  random(-100, 100), height / 2 + random(-100, 100));
         this.velocity = createVector(0, 0);
         this.rotateDeg = 0;
-        this.Bullet = null;
+        this.Bullet = [];
         this.playerNo = playerNo;
         this.colour = color(random(100, 255), random(100, 255), random(100, 255))
         this.maxSpeed = 2;
@@ -25,7 +25,7 @@ class Player{
         if (testX < width && testX > 0 && testY > 0 && testY < height) this.pos.add(this.velocity);
         else this.velocity = createVector(0, 0)
         this.drawInstance();
-        this.Bullet?.update();
+        for (let i of this.Bullet) i.update();
         this.velocity.mult(0.99);
     }
     rotate(left) {
@@ -37,27 +37,32 @@ class Player{
     }
     drawInstance() {
         push();
+        noStroke();
         translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
         fill(this.colour);
         triangle(- 10, 0, 10, 0, 0, - 10);
+        textSize(10)
+        fill("black");
+        text(this.playerNo + 1, 0, 0);
         pop();
     }
     shoot() {
-        this.Bullet = new Bullet(this.pos.x, this.pos.y, this.playerNo);
+        this.Bullet.push(new Bullet(this.pos.x, this.pos.y, this.playerNo, this.Bullet.length));
     }
 }
  
 class Bullet{
-    constructor(X, Y, playerNo) {
+    constructor(X, Y, playerNo, id) {
         this.pos = createVector(X + 0.01, Y + 0.01);
         this.relatedPlayerNo = playerNo;
         this.rotateDeg = player[this.relatedPlayerNo].rotateDeg;
+        this.id = id;
     }
     update() {
         this.prevPos = createVector(this.pos.x, this.pos.y);
-        let yForce = (Math.cos(this.rotateDeg * Math.PI / 180) * -10) * 2;
-        let xForce = (Math.sin(this.rotateDeg * Math.PI / 180) * 10) * 2;
+        let yForce = (Math.cos(this.rotateDeg * Math.PI / 180) * -10);
+        let xForce = (Math.sin(this.rotateDeg * Math.PI / 180) * 10);
         this.force = createVector(xForce, yForce);
         this.checkDeletion();
         this.pos.add(this.force);
@@ -66,14 +71,8 @@ class Bullet{
     }
     checkDeletion(confirm = false) {
         if (this.pos.y <= 0 || this.pos.y >= height || this.pos.x <= 0 || this.pos.x >= width || confirm) {
-            push();
-            translate(this.prevPos.x, this.prevPos.y);
-            rotate(this.rotateDeg);
-            erase();
-            ellipse(0, 0, width / 40, height / 20);
-            noErase();
-            pop();
-            player[this.relatedPlayerNo].Bullet = null;
+            player[this.relatedPlayerNo].Bullet.splice(this.id, this.id + 1);
+            for (let i = this.id; i < player[this.relatedPlayerNo].Bullet.length; i++) player[this.relatedPlayerNo].Bullet[i].id--;
             return;
         }
     }
@@ -83,26 +82,19 @@ class Bullet{
                 let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
                 if (prox < 20) {
                     this.checkDeletion(true);
-                    displayText = "Player " + (i+1) + " was hit! Player " + (i+2) + " won!"
+                    displayText = "Player " + (i+1) + " was hit! Player " + (i) + " won!"
                 }
             }
         }
     }
     drawInstance() {
+        noStroke()
         fill("red");
-        //erase previous element
-        push();
-        translate(this.prevPos.x, this.prevPos.y);
-        rotate(this.rotateDeg);
-        erase();
-        ellipse(0, 0, width / 40, height / 20);
-        noErase();
-        pop();
         //create new element
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
-        ellipse(0, 0, width / 40, height / 20);
+        ellipse(0, 0, height / 40, height / 20);
         pop();
     }
 }

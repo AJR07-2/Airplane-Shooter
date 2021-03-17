@@ -9,14 +9,12 @@ function setup() {
     angleMode(DEGREES);
     textAlign(CENTER);
     newBooster("speed");
-    newBooster("speed");
  }
   
 function draw() {
-    clear();
     delay++;
     delay1++;
-    background(0, 0, 0, 8);
+    background(0, 0, 0, 50);
     //update players location and score
     for (let i = 0; i < noPlayers; i++)player[i].move();
     Title();
@@ -33,6 +31,7 @@ function draw() {
     text(displayText, width / 2, height / 2)
     if (noLoopNext) noLoop();
     if (displayText != "") noLoopNext = true;
+
 }
 
 function newBooster() {
