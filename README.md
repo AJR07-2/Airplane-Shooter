@@ -19,3 +19,4 @@ Shoot: <kbd>o</kbd> <br>
 
 # Booster Image Credits
 Speed: https://www.freepik.com/
+Bomb: https://www.flaticon.com/authors/smashicons

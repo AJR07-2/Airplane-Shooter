@@ -58,6 +58,7 @@ class Bullet{
         this.relatedPlayerNo = playerNo;
         this.rotateDeg = player[this.relatedPlayerNo].rotateDeg;
         this.id = id;
+        this.color = color(random(20, 255), random(20, 255), random(20, 255));
     }
     update() {
         this.prevPos = createVector(this.pos.x, this.pos.y);
@@ -89,7 +90,7 @@ class Bullet{
     }
     drawInstance() {
         noStroke()
-        fill("red");
+        fill(this.color);
         //create new element
         push();
         translate(this.pos.x, this.pos.y);

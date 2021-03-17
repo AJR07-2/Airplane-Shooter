@@ -18,9 +18,13 @@ class boost{
     }
 
     applyEffect(playerNo) {
-        player[playerNo].maxSpeed++;
-        player[playerNo].velocity.mult(1.05);
-        player[playerNo].accelerationFactor *= 1.1;
+        if (this.type == "speed") {
+            player[playerNo].maxSpeed++;
+            player[playerNo].velocity.mult(1.05);
+            player[playerNo].accelerationFactor *= 1.1;
+        } else if (this.type == "bomb") {
+            
+        }
         this.self_destruct();
     }
 

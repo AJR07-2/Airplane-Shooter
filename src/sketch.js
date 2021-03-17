@@ -8,7 +8,7 @@ function setup() {
     background(0);
     angleMode(DEGREES);
     textAlign(CENTER);
-    newBooster("speed");
+    newBooster();
  }
   
 function draw() {
@@ -35,7 +35,10 @@ function draw() {
 }
 
 function newBooster() {
-    booster.push(new boost("speed", noBooster));
+    let random1 = int(random(1, 3)), type = "";
+    if (random1 == 1) type = "speed";
+    else if(random1 == 2) type = "bomb";
+    booster.push(new boost(type, noBooster));
     noBooster++;
 }
 
