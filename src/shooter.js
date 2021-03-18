@@ -8,7 +8,7 @@ class Player{
         this.colour = color(random(100, 255), random(100, 255), random(100, 255))
         this.maxSpeed = 2;
         this.accelerationFactor = 0.2;
-        this.rotateInterval = 10;
+        this.rotateInterval = 5;
     }
     addForce(back = false) {
         let pushX = Math.sin(this.rotateDeg * Math.PI / 180) * this.accelerationFactor;
@@ -26,7 +26,7 @@ class Player{
         else this.velocity = createVector(0, 0)
         this.drawInstance();
         for (let i of this.Bullet) i.update();
-        this.velocity.mult(0.99);
+        this.velocity.mult(0.98);
     }
     rotate(left) {
         //restricting rotation angle
@@ -41,10 +41,10 @@ class Player{
         translate(this.pos.x, this.pos.y);
         rotate(this.rotateDeg);
         fill(this.colour);
-        triangle(- 10, 0, 10, 0, 0, - 10);
-        textSize(10)
+        triangle(- 20, 0, 20, 0, 0, - 20);
+        textSize(15)
         fill("black");
-        text(this.playerNo + 1, 0, 0);
+        text(this.playerNo + 1, 0, -5);
         pop();
     }
     shoot() {
