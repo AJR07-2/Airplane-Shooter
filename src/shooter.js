@@ -6,7 +6,7 @@ class Player{
         this.Bullet = [];
         this.playerNo = playerNo;
         this.colour = color(random(100, 255), random(100, 255), random(100, 255))
-        this.maxSpeed = 2;
+        this.maxSpeed = 3;
         this.accelerationFactor = 0.2;
         this.rotateInterval = 5;
     }
@@ -17,8 +17,8 @@ class Player{
         if (back) force.mult(-1);
         let testX = force.x + this.velocity.x;
         let testY = force.y + this.velocity.y;
-        if (testX < this.maxSpeed && testX >= -this.maxSpeed) this.velocity.x += force.x;
-        if (testY < this.maxSpeed && testY >= -this.maxSpeed) this.velocity.y += force.y;
+        if (testX < this.maxSpeed && testX >= -this.maxSpeed) this.velocity.x += force.x  * 1.5;
+        if (testY < this.maxSpeed && testY >= -this.maxSpeed) this.velocity.y += force.y * 1.5;
     }
     move() {
         let testX = this.pos.x + this.velocity.x, testY = this.pos.y + this.velocity.y;

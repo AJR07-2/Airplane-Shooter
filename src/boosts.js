@@ -24,6 +24,7 @@ class boost{
             displayText = "Player " + (playerNo + 1) + " was exploded by a bomb! Player " + (playerNo) + " won!"
             push();
             fill("white");
+            noStroke();
             circle(this.pos.x, this.pos.y, this.size * 10)
             pop();
         }
@@ -52,6 +53,7 @@ class boost{
     }
     self_destruct() {
         booster.splice(this.boosterId, this.boosterId + 1);
+        console.log(booster)
         for (let i = this.boosterId; i < noBooster-1; i++)booster[i].boosterId--;
         noBooster--;
     }
