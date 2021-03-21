@@ -10,7 +10,6 @@ function setup() {
     textAlign(CENTER);
     rectMode(CENTER)
     newBooster();
-    newBooster();
     HTMLMediaElement.autoplay = true;
  }
   
@@ -48,9 +47,9 @@ function draw() {
 }
 
 function newBooster() {
-    let random1 = int(random(1, 3)), type = "";
-    if (random1 == 1) type = "speed";
-    else if (random1 == 2) type = "bomb";
+    let random1 = int(random(1, 4)), type = "";
+    if (random1 == 1 || random1 == 2) type = "speed";
+    else if (random1 == 3) type = "bomb";
     booster.push(new boost(type, noBooster));
     noBooster++;
 }

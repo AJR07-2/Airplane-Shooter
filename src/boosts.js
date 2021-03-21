@@ -53,7 +53,6 @@ class boost{
     }
     self_destruct() {
         booster.splice(this.boosterId, this.boosterId + 1);
-        console.log(booster)
         for (let i = this.boosterId; i < noBooster-1; i++)booster[i].boosterId--;
         noBooster--;
     }
