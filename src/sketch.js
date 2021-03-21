@@ -1,6 +1,7 @@
 let player = [], booster = [], delay = 0, delay1 = 0;
 let noPlayers = 2, noBooster = 0;
 let displayText = "", noLoopNext = false;
+let controls = [["w", "a", "s", "d", "MOUSE_LEFT"],["i", "j", "k", "l", "o"]];
 function setup() {
     createCanvas(windowWidth, windowHeight);
     //creation of player

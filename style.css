@@ -3,9 +3,29 @@ html{
     overflow: hidden;
 }
 
-#start-screen{
+#help {
+    /*position*/
     position: fixed;
-    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    /*Design*/
+    width: 200px;
+    height: 550px;
     background-color: yellow;
-    
+
+    box-shadow: 0 0 40px rgb(255, 246, 167);
+    border-radius: 5px;
+}
+
+p{
+    padding: 10px;
+    background-color: wheat;
+    margin-right: 40%;
+    margin-left: 10%;
+    border-radius: 10px;
+}
+
+#Player{
+    margin-right: 10%;
+    background-color: turquoise;
 }

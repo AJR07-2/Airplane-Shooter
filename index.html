@@ -1,16 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Shoot</title>
+    <title>AstroMini</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <div id="help page"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   </head>
+
   <body>
+    <div id="help">
+      <label for="player1"></label>
+      <div id="player1">
+        <p id="Player"><strong>Player 1</strong> </p>
+        <p>Controls:</p>
+        <input 
+        type = "button"
+        value = "Change"
+        v-on:click="changeControl"
+        >
+        <br>
+        <label for="forward">⬆︎ {{ controls[0][0] }}</label>
+        <br>
+        <label for="backward">⬇︎ {{ controls[0][1] }}</label>
+        <br>
+        <label for="left">↩︎ {{ controls[0][2] }}</label>
+        <br>
+        <label for="right">↪︎ {{ controls[0][3] }} </label>
+        <br>
+        <label for="mouse">🐁︎ {{ controls[0][4] }} </label> 
+      </div>
+
+
+
+      <div id="player2">
+        <p id="Player"><strong>Player 2</strong> </p>
+        <p>Controls:</p>
+        <input 
+        type = "button"
+        value = "Change"
+        v-on:click="changeControl"
+        >
+        <br>
+        <label for="forward">⬆︎ {{ controls[1][0] }}</label>
+        <br>
+        <label for="backward">⬇︎ {{ controls[1][1] }}</label>
+        <br>
+        <label for="left">↩︎ {{ controls[1][2] }}</label>
+        <br>
+        <label for="right">↪︎ {{ controls[1][3] }} </label>
+        <br>
+        <label for="mouse">🐁︎ {{ controls[1][4] }} </label> 
+      </div>
+    </div>
     <script src="src/sketch.js"></script>
     <script src="src/shooter.js"></script>
     <script src="src/window.js"></script>
     <script src="src/p5_functions.js"></script>
     <script src="src/boosts.js"></script>
+    <script src="src/index.js"></script>
   </body>
 </html>

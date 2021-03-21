@@ -9,6 +9,7 @@ class Player{
         this.maxSpeed = 3;
         this.accelerationFactor = 0.2;
         this.rotateInterval = 5;
+
     }
     addForce(back = false) {
         let pushX = Math.sin(this.rotateDeg * Math.PI / 180) * this.accelerationFactor;
@@ -83,7 +84,7 @@ class Bullet{
                 let prox = dist(player[i].pos.x, player[i].pos.y, this.pos.x, this.pos.y);
                 if (prox < 20) {
                     this.checkDeletion(true);
-                    displayText = "Player " + (i+1) + " was hit! Player " + (i) + " won!"
+                    displayText = "Player " + (i+1) + " was hit!"
                 }
             }
         }
